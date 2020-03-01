@@ -1,3 +1,5 @@
 src/LineBot.Net/obj/*
 src/LineBot.Net/bin/*
+src/LineBotExample/obj/*
+src/LineBotExample/bin/*
 
