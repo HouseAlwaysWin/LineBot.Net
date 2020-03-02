@@ -3,17 +3,14 @@ using System.Net.Http;
 using LineBot.Net.Types;
 using LineBot.Net.Types.Abstractions;
 
-namespace LineBot.Net.Requests.Abstractions
-{
-    public class ReplyMessageRequest : RequestBase<bool>
-    {
+namespace LineBot.Net.Requests.Abstractions {
+    public class ReplyMessageRequest : RequestBase<bool> {
 
         public string ReplyToken { get; set; }
-        public List<MessageObject> Messages { get; set; }
+        public List<IMessage> Messages { get; set; }
         public bool NotificationDisabled { get; set; }
 
-        public ReplyMessageRequest(string replyToken, List<MessageObject> messages) : base("reply")
-        {
+        public ReplyMessageRequest (string replyToken, List<IMessage> messages) : base ("reply") {
             ReplyToken = replyToken;
             Messages = messages;
         }

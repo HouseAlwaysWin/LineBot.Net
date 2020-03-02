@@ -21,5 +21,7 @@ namespace LineBot.Net.Requests.Abstractions {
         /// </summary>
         /// <returns>Content of HTTP request</returns>
         HttpContent ToHttpContent ();
+
+        
     }
 }
