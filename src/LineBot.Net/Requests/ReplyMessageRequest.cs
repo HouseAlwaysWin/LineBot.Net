@@ -4,7 +4,7 @@ using LineBot.Net.Types;
 using LineBot.Net.Types.Abstractions;
 
 namespace LineBot.Net.Requests.Abstractions {
-    public class ReplyMessageRequest : RequestBase<bool> {
+    public class ReplyMessageRequest : RequestBase {
 
         public string ReplyToken { get; set; }
         public List<IMessage> Messages { get; set; }

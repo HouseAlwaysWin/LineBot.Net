@@ -42,12 +42,6 @@ namespace LineBot.Net {
                 Content = request.ToHttpContent (),
             };
 
-            var reqDataArgs = new ApiRequestEventArgs {
-                MethodName = request.MethodName,
-                HttpContent = httpRequest.Content,
-            };
-            MakingApiRequest?.Invoke (this, reqDataArgs);
-
             HttpResponseMessage httpResponse = null;
 
             try {
@@ -76,6 +70,29 @@ namespace LineBot.Net {
             return apiResponse.Result;
 
         }
+
+        public async Task MakeRequestAsync (
+            IRequest request,
+            CancellationToken cancellationToken = default) {
+
+            string url = _baseMessageRequestUrl + request.MethodName;
+
+            var httpRequest = new HttpRequestMessage (request.Method, url) {
+                Content = request.ToHttpContent (),
+            };
+
+            HttpResponseMessage httpResponse = null;
+
+            try {
+                httpResponse = await _httpClient.SendAsync (httpRequest, cancellationToken)
+                    .ConfigureAwait (false);
+            } catch (TaskCanceledException ex) {
+                if (cancellationToken.IsCancellationRequested)
+                    throw;
+                throw new ApiRequestException ("Request timed out", 408, ex);
+            }
+        }
+
         #endregion
 
         public async Task ReplyTextMessage (
